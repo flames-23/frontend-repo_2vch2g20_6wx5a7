@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar';
+import Pricing from './components/Pricing';
 import { ArrowRight, Check, MoveRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -165,6 +166,7 @@ export default function App() {
         <Hero />
         <Benefits />
         <Process />
+        <Pricing />
         <CTA />
         <Contact />
       </main>
