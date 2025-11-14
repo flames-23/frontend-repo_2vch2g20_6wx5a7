@@ -1,6 +1,10 @@
 import Spline from '@splinetool/react-spline';
 import Navbar from './components/Navbar';
 import { ArrowRight, ShieldCheck, LineChart, Users } from 'lucide-react';
+import ScrollCinema from './components/ScrollCinema';
+import ParallaxReel from './components/ParallaxReel';
+import Pricing from './components/Pricing';
+import { motion } from 'framer-motion';
 
 function GradientAura() {
   return (
@@ -28,6 +32,7 @@ export default function App() {
       <Navbar />
 
       <main className="relative">
+        {/* HERO with 3D Spline */}
         <section className="relative mx-auto flex min-h-[78vh] max-w-7xl flex-col items-center justify-center px-6 pt-10 text-center">
           <GradientAura />
 
@@ -62,6 +67,7 @@ export default function App() {
           </div>
         </section>
 
+        {/* FEATURES */}
         <section id="features" className="relative z-10 mx-auto mb-24 mt-10 max-w-7xl px-6">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <Feature icon={ShieldCheck} title="Business Setup" desc="Set your business type, map core processes, and define targets in one guided flow." />
@@ -70,6 +76,16 @@ export default function App() {
           </div>
         </section>
 
+        {/* Scroll-driven 3D cinematic section */}
+        <ScrollCinema />
+
+        {/* Parallax explainer */}
+        <ParallaxReel />
+
+        {/* Pricing */}
+        <Pricing />
+
+        {/* CTA */}
         <section id="get-started" className="relative z-10 mx-auto mb-24 max-w-5xl px-6">
           <div className="rounded-3xl border border-white/10 bg-white/5 p-8 text-center shadow-lg backdrop-blur-xl">
             <h2 className="mb-3 text-2xl font-semibold">Ready to scale with the wolf pack?</h2>
@@ -79,6 +95,20 @@ export default function App() {
             <a className="inline-block rounded-xl bg-gradient-to-r from-purple-600 via-blue-600 to-orange-500 px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95" href="#">
               Create Free Account
             </a>
+          </div>
+        </section>
+
+        {/* Contact */}
+        <section id="contact" className="relative z-10 mx-auto mb-24 max-w-5xl px-6">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-lg backdrop-blur-xl">
+            <h3 className="mb-2 text-xl font-semibold">Contact</h3>
+            <p className="text-white/80">Want a custom 3D scene or motion sequence? Share your brief and we’ll tailor the experience.</p>
+            <form className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <input className="rounded-xl border border-white/10 bg-white/10 p-3 text-sm text-white placeholder-white/60 outline-none" placeholder="Name" />
+              <input className="rounded-xl border border-white/10 bg-white/10 p-3 text-sm text-white placeholder-white/60 outline-none" placeholder="Email" />
+              <textarea rows="4" className="sm:col-span-2 rounded-xl border border-white/10 bg-white/10 p-3 text-sm text-white placeholder-white/60 outline-none" placeholder="What animations are you envisioning?" />
+              <button type="button" className="sm:col-span-2 rounded-xl bg-gradient-to-r from-purple-600 via-blue-600 to-orange-500 px-6 py-3 text-sm font-semibold text-white shadow hover:opacity-95">Send</button>
+            </form>
           </div>
         </section>
       </main>
