@@ -14,12 +14,12 @@ function Accent() {
 
 function Hero() {
   return (
-    <section className="relative mx-auto max-w-7xl px-6 pb-16 pt-28">
+    <section className="relative mx-auto max-w-7xl px-6 pb-16 pt-36">
       <Accent />
       <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
         <div>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-white/80 backdrop-blur">
-            New design • Minimal, fast, focused
+            New design • Motion-first • Brand-ready
           </div>
           <h1 className="text-balance bg-gradient-to-b from-white to-white/70 bg-clip-text text-5xl font-extrabold leading-[1.1] text-transparent sm:text-6xl">
             Scale smarter.

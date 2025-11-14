@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 
 const tiers = [
   {
@@ -22,15 +23,52 @@ const tiers = [
   }
 ];
 
-const skylineHeights = [24, 40, 56, 72, 48, 64, 36, 52, 28];
+const skylineConfig = [
+  { h: 22, w: 6, delay: 0 },
+  { h: 36, w: 8, delay: 0.04 },
+  { h: 52, w: 7, delay: 0.08 },
+  { h: 68, w: 9, delay: 0.12 },
+  { h: 44, w: 6, delay: 0.16 },
+  { h: 60, w: 10, delay: 0.2 },
+  { h: 34, w: 7, delay: 0.24 },
+  { h: 50, w: 8, delay: 0.28 },
+  { h: 28, w: 6, delay: 0.32 },
+];
+
+function Building({ h, w, delay }) {
+  return (
+    <motion.div
+      initial={{ scaleY: 0, opacity: 0 }}
+      whileInView={{ scaleY: 1, opacity: 1 }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.6, delay, ease: 'easeOut' }}
+      className="relative origin-bottom rounded-md bg-gradient-to-b from-cyan-400/80 to-cyan-500/30 shadow-[0_-6px_20px_rgba(34,211,238,0.25)_inset]"
+      style={{ height: `${h * 4}px`, width: `${w * 4}px` }}
+    >
+      {/* windows */}
+      <div className="pointer-events-none absolute inset-0 grid grid-cols-3 gap-1 p-1 opacity-20">
+        {Array.from({ length: 18 }).map((_, i) => (
+          <div key={i} className="h-1.5 w-full rounded-sm bg-white" />
+        ))}
+      </div>
+      {/* rooftop */}
+      <div className="absolute -top-1 left-1/2 h-1 w-6 -translate-x-1/2 rounded-sm bg-cyan-300/50" />
+    </motion.div>
+  );
+}
 
 export default function Pricing() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const parallaxOpacity = useTransform(scrollYProgress, [0, 1], [0.4, 0.8]);
+
   return (
-    <section id="pricing" className="relative z-10 mx-auto my-24 max-w-6xl px-6">
-      {/* Skyline background that builds up on scroll */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
+    <section id="pricing" ref={ref} className="relative z-10 mx-auto my-28 max-w-6xl px-6">
+      {/* Background glow */}
+      <motion.div style={{ y: parallaxY, opacity: parallaxOpacity }} className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(60%_40%_at_50%_0%,rgba(56,189,248,0.08),transparent)]" />
-      </div>
+      </motion.div>
 
       <div className="mb-10 text-center">
         <p className="mb-2 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs text-white/80 backdrop-blur">Pricing</p>
@@ -38,19 +76,11 @@ export default function Pricing() {
         <p className="mx-auto mt-2 max-w-2xl text-white/80">Start free and upgrade when you need deeper dashboards and orchestration.</p>
       </div>
 
-      {/* Animated skyline */}
-      <div className="relative mx-auto mb-10 max-w-4xl">
-        <div className="flex h-32 items-end justify-between gap-2">
-          {skylineHeights.map((h, i) => (
-            <motion.div
-              key={i}
-              initial={{ scaleY: 0, opacity: 0 }}
-              whileInView={{ scaleY: 1, opacity: 1 }}
-              viewport={{ once: true, amount: 0.5 }}
-              transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
-              className="w-6 origin-bottom rounded-md bg-gradient-to-b from-cyan-400/80 to-cyan-500/30 shadow-[0_-6px_20px_rgba(34,211,238,0.25)_inset]"
-              style={{ height: `${h * 4}px` }}
-            />
+      {/* Animated skyline with parallax */}
+      <div className="relative mx-auto mb-12 max-w-4xl">
+        <div className="flex h-40 items-end justify-between gap-2">
+          {skylineConfig.map((b, i) => (
+            <Building key={i} {...b} />
           ))}
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0a0b0f] to-transparent" />
